@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>মুরগি ব্যবসার লাভ-ক্ষতির প্রফেশনাল ক্যালকুলেটর</title>
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #fffdfc 0%, #002c5f 100%);
+      color: #2c3e50;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: linear-gradient(135deg, #135a83cc, #135a83cc);
+      max-width: 480px;
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      padding: 30px 35px;
+      color: #ffffff; /* container এর ভিতরের টেক্সট সাদা */
+    }
+    h1 {
+      margin-bottom: 25px;
+      font-size: 28px;
+      font-weight: 700;
+      color: #ffffff; /* হেডিং সাদা */
+      text-align: center;
+      letter-spacing: 1.2px;
+    }
+    label {
+      display: block;
+      margin: 18px 0 6px 0;
+      font-weight: 600;
+      font-size: 16px;
+      color: #f0f0f0; /* লেবেল হালকা সাদা */
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 12px 15px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1.8px solid #bdc3c7;
+      transition: border-color 0.3s ease;
+    }
+    input[type="number"]:focus {
+      border-color: #3498db;
+      outline: none;
+      box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+    }
+    button {
+      width: 100%;
+      margin-top: 28px;
+      padding: 14px 0;
+      font-size: 20px;
+      background-color: #2980b9;
+      color: #fff; /* বাটনের টেক্সট সাদা */
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.35s ease;
+      box-shadow: 0 6px 12px rgba(41, 128, 185, 0.4);
+    }
+    button:hover {
+      background-color: #1f618d;
+    }
+    .result {
+      margin-top: 28px;
+      background: #28a745cc; /* ট্রান্সপারেন্ট গ্রীন ব্যাকগ্রাউন্ড */
+      border-left: 6px solid #28a745;
+      padding: 20px 25px;
+      font-weight: 700;
+      font-size: 18px;
+      color: #f9f9f9; /* রেজাল্ট টেক্সট সাদা */
+      white-space: pre-line;
+      border-radius: 8px;
+      box-shadow: 0 3px 7px rgba(40, 167, 69, 0.4);
+    }
+
+    @media (max-width: 520px) {
+      .container {
+        padding: 25px 20px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      button {
+        font-size: 18px;
+        padding: 12px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="main">
+    <h1>মুরগি ব্যবসার লাভ-ক্ষতির প্রফেশনাল ক্যালকুলেটর</h1>
+
+    <label for="totalChicks">মোট বাচ্চা মুরগির সংখ্যা</label>
+    <input type="number" id="totalChicks" placeholder="উদাহরণ: 1020" aria-label="মোট বাচ্চা মুরগির সংখ্যা" />
+
+    <label for="pricePerChick">বাচ্চা মুরগির দাম (টাকা প্রতি ১টি)</label>
+    <input type="number" id="pricePerChick" placeholder="উদাহরণ: 30" aria-label="বাচ্চা মুরগির দাম" />
+
+    <label for="feedBags">খাবারের বস্তার সংখ্যা</label>
+    <input type="number" id="feedBags" placeholder="উদাহরণ: 33" aria-label="খাবারের বস্তার সংখ্যা" />
+
+    <label for="feedPrice">এক বস্তার দাম (টাকা)</label>
+    <input type="number" id="feedPrice" placeholder="উদাহরণ: 2850" aria-label="এক বস্তার দাম" />
+
+    <label for="extraCost">অতিরিক্ত খরচ (টাকা)</label>
+    <input type="number" id="extraCost" placeholder="উদাহরণ: 25000" aria-label="অতিরিক্ত খরচ" />
+
+    <label for="soldWeight">বিক্রি হওয়া মোট ওজন (কেজি)</label>
+    <input type="number" id="soldWeight" placeholder="উদাহরণ: 800" aria-label="বিক্রি হওয়া মোট ওজন" />
+
+    <label for="sellRate">বিক্রির রেট (টাকা প্রতি কেজি)</label>
+    <input type="number" id="sellRate" placeholder="উদাহরণ: 250" aria-label="বিক্রির রেট" />
+
+    <button onclick="calculateProfit()" aria-label="লাভ হিসাব করো">লাভ হিসাব করো</button>
+
+    <section id="result" class="result" aria-live="polite" style="display:none;"></section>
+  </div>
+
+  <script>
+    function calculateProfit() {
+      const totalChicks = Number(document.getElementById('totalChicks').value);
+      const pricePerChick = Number(document.getElementById('pricePerChick').value);
+      const feedBags = Number(document.getElementById('feedBags').value);
+      const feedPrice = Number(document.getElementById('feedPrice').value);
+      const extraCost = Number(document.getElementById('extraCost').value);
+      const soldWeight = Number(document.getElementById('soldWeight').value);
+      const sellRate = Number(document.getElementById('sellRate').value);
+
+      if (
+        totalChicks <= 0 || pricePerChick < 0 || feedBags < 0 || feedPrice < 0 ||
+        extraCost < 0 || soldWeight < 0 || sellRate < 0
+      ) {
+        alert("সঠিক তথ্য প্রদান করুন। ইনপুট শূন্য বা নেতিবাচক হতে পারবে না।");
+        return;
+      }
+
+      const chickCost = totalChicks * pricePerChick;
+      const feedCost = feedBags * feedPrice;
+      const totalCost = chickCost + feedCost + extraCost;
+
+      const income = soldWeight * sellRate;
+      const profit = income - totalCost;
+      const profitPercent = (profit / totalCost) * 100;
+
+      const resultDiv = document.getElementById('result');
+      resultDiv.style.display = "block";
+      resultDiv.textContent =
+        `মোট খরচ: ${totalCost.toLocaleString()} টাকা\n` +
+        `মোট বিক্রি: ${income.toLocaleString()} টাকা\n` +
+        `লাভ: ${profit.toLocaleString()} টাকা\n` +
+        `লাভের শতাংশ: ${profitPercent.toFixed(2)}%`;
+    }
+  </script>
+</body>
+</html>
